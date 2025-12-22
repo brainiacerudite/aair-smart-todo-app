@@ -37,7 +37,7 @@ export const useTaskStore = create<TaskStore>()(
                         ...state.tasks,
                         {
                             ...taskData,
-                            id: `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            id: `task_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`,
                             createdAt: Date.now(),
                             isCompleted: false,
                         },
@@ -51,7 +51,7 @@ export const useTaskStore = create<TaskStore>()(
                         ...state.tasks,
                         ...tasksData.map((taskData, index) => ({
                             ...taskData,
-                            id: `task_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`,
+                            id: `task_${Date.now()}_${index}_${Math.random().toString(36).slice(2, 11)}`,
                             createdAt: Date.now() + index,
                             isCompleted: false,
                         })),

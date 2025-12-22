@@ -1,50 +1,239 @@
-# Welcome to your Expo app 👋
+# 🎯 Smart Todo App - AI-Powered Task Management
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, feature-rich React Native todo application with **AI-powered voice transcription** and intelligent task splitting. Built with TypeScript, Zustand state management, and Expo for cross-platform compatibility.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+### Core Functionality
+
+- ✅ **Create, Edit, and Delete Tasks** - Full CRUD operations with form-based task entry
+- 🎙️ **Voice-to-Task with AI** - Record voice and let AI transcribe and intelligently split multiple tasks
+- 🔍 **Search & Filter** - Real-time search across task titles and descriptions
+- 📊 **Smart Sorting** - Sort by title (A-Z/Z-A) or due date (earliest/latest)
+- ✏️ **Edit Mode** - Tap any task to edit its details
+- 📅 **Due Date Picker** - Native date picker with minimum date validation
+- 🗑️ **Swipe to Delete** - Intuitive gesture with visual hint
+- ✅ **Toggle Completion** - Mark tasks as done/undone with checkbox
+
+### Advanced Features (Bonus)
+
+- 🌓 **Dark Mode Support** - Seamless light/dark theme switching
+- 🤖 **Multi-Provider AI** - Supports OpenAI, Gemini, and Deepgram for voice transcription
+- 🎨 **Voice Split Modal** - Review AI-suggested task splits before saving
+- 💾 **Persistent Storage** - Tasks saved locally using AsyncStorage
+- 🎭 **Smooth Animations** - React Native Reanimated for polished UX
+- 🔄 **Real-time Updates** - Instant UI updates with Zustand reactive state
+
+### Split Workflow
+
+- **Header (+) Icon**: Opens form-based "Add Task" screen for manual entry
+- **FAB (Microphone)**: Opens voice modal for quick voice-based task creation
+
+## 🏗️ Architecture
+
+### State Management - Zustand
+
+Chose **Zustand** for its simplicity, TypeScript support, and minimal boilerplate:
+
+- **Small Bundle Size** (~1KB vs Redux's ~3KB)
+- **No Context Providers** - Direct access to store from any component
+- **Built-in Persistence** - Seamless AsyncStorage integration
+- **Reactive Updates** - Components re-render only when their selected state changes
+- **DevTools Compatible** - Easy debugging
+
+### Project Structure
+
+```
+src/
+├── api/                    # API client configurations
+│   ├── deepgramClient.ts   # Deepgram API setup
+│   ├── geminiClient.ts     # Google Gemini API setup
+│   └── openAIClient.ts     # OpenAI API setup
+├── components/             # Reusable UI components
+│   ├── AppText.tsx         # Themed text component
+│   ├── FAB.tsx             # Floating Action Button
+│   ├── FilterModal.tsx     # Sort options modal
+│   ├── TaskItem.tsx        # Individual task card
+│   ├── VoiceModal.tsx      # Voice recording modal
+│   └── VoiceSplitModal.tsx # AI task split review modal
+├── hooks/                  # Custom React hooks
+│   ├── useTaskProcessor.ts # AI transcription & parsing logic
+│   └── useVoiceRecorder.ts # Voice recording management
+├── navigation/             # Navigation configuration
+│   └── RootNavigator.tsx   # Stack navigator setup
+├── screens/                # App screens
+│   ├── AddTaskScreen.tsx   # Form-based task creation/editing
+│   └── TaskListScreen.tsx  # Main task list with search/filter
+├── services/               # Business logic & services
+│   └── ai/                 # AI service implementations
+│       ├── deepgramService.ts
+│       ├── geminiService.ts
+│       ├── openAIService.ts
+│       └── index.ts        # AI provider selector
+├── store/                  # Zustand state management
+│   ├── useTaskStore.ts     # Task state & actions
+│   └── useThemeStore.ts    # Theme state & actions
+├── theme/                  # Design system
+│   ├── colors.ts           # Color palette
+│   └── spacing.ts          # Spacing constants
+├── types/                  # TypeScript interfaces
+│   └── index.ts            # Global type definitions
+└── utils/                  # Utility functions
+    └── aiParser.ts         # Task parsing utilities
+```
+
+## 🚀 Setup Instructions
+
+### Prerequisites
+
+- Node.js 18+ and npm/yarn
+- Expo CLI (`npm install -g expo-cli`)
+- iOS Simulator (Mac) or Android Emulator
+- API Keys from at least one provider:
+  - [OpenAI API Key](https://platform.openai.com/api-keys)
+  - [Google Gemini API Key](https://makersuite.google.com/app/apikey)
+  - [Deepgram API Key](https://console.deepgram.com/)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd SmartTodoApp
+   ```
+
+2. **Install dependencies**
 
    ```bash
    npm install
+   # or
+   yarn install
    ```
 
-2. Start the app
+3. **Configure Environment Variables**
+
+   Create a `.env` file in the project root by copying the example:
 
    ```bash
+   cp .env.example .env
+   ```
+
+   Open `.env` and add your API keys:
+
+   ```env
+   EXPO_PUBLIC_OPENAI_API_KEY="sk-your-openai-key-here"
+   EXPO_PUBLIC_GEMINI_API_KEY="your-gemini-key-here"
+   EXPO_PUBLIC_DEEPGRAM_API_KEY="your-deepgram-key-here"
+   ```
+
+   **Get API Keys:**
+
+   - OpenAI: https://platform.openai.com/api-keys
+   - Gemini: https://makersuite.google.com/app/apikey
+   - Deepgram: https://console.deepgram.com/
+
+   **Note:** You only need ONE API key from any provider. The app will automatically use the first available provider. Then set the `AIChoice` in `src/services/ai/index.ts`
+
+4. **Start the development server**
+
+   ```bash
+   npm start
+   # or
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+5. **Run on your device**
+   - Press `i` for iOS Simulator
+   - Press `a` for Android Emulator
+   - Scan QR code with Expo Go app on your phone
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🧪 Testing
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Run Unit Tests
 
 ```bash
-npm run reset-project
+npm test
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Test Coverage
 
-## Learn more
+```bash
+npm test -- --coverage
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+The test suite includes comprehensive tests for:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Task CRUD operations
+- State management logic
+- Search and filter functionality
+- Sort operations
+- Data persistence
 
-## Join the community
+## 📱 Usage Guide
 
-Join our community of developers creating universal apps.
+### Adding Tasks
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Method 1: Manual Entry (Header + Icon)**
+
+1. Tap the **+** icon in the top-right header
+2. Fill in task details:
+   - Title (required)
+   - Description (optional)
+   - Due Date (optional)
+3. Use the mic icon in the title field for voice dictation
+4. Tap "Add Task" to save
+
+**Method 2: Voice Entry (FAB)**
+
+1. Tap the **microphone FAB** (Floating Action Button)
+2. Record your task(s) - can mention multiple tasks in one recording
+3. AI will transcribe and suggest task splits
+4. Choose to save as:
+   - Single task (original transcription)
+   - Multiple tasks (AI-split suggestions)
+
+### Managing Tasks
+
+- **Complete**: Tap the checkbox
+- **Edit**: Tap anywhere on the task card
+- **Delete**: Swipe left and tap the delete icon
+- **Search**: Type in the search bar
+- **Sort**: Tap the filter icon to choose sort order
+
+## 🛠️ Tech Stack
+
+- **Framework**: React Native (Expo SDK 54)
+- **Language**: TypeScript
+- **State Management**: Zustand with persist middleware
+- **Navigation**: React Navigation (Stack Navigator)
+- **UI/Animations**: React Native Reanimated, React Native Gesture Handler
+- **Storage**: AsyncStorage
+- **AI Services**: OpenAI GPT-4, Google Gemini, Deepgram
+- **Date Picker**: @react-native-community/datetimepicker
+
+## 🎨 Design Features
+
+- **Responsive Layout**: Adapts to different screen sizes
+- **Theme Support**: System-aware light/dark mode
+- **Smooth Animations**: 60fps animations for delightful UX
+- **Visual Feedback**: Loading states, success/error alerts
+- **Accessibility**: Proper contrast ratios and touch targets
+
+## 📝 Future Enhancements
+
+- [ ] Task categories/tags
+- [ ] Recurring tasks
+- [ ] Cloud sync (Firebase/Supabase)
+- [ ] Task sharing and collaboration
+- [ ] Notifications for due dates
+- [ ] Task priority levels
+- [ ] Statistics and productivity insights
+
+## 🤝 Contributing
+
+This is a code challenge submission. For evaluation purposes only.
+
+## 📄 License
+
+MIT
