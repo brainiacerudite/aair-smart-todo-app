@@ -195,6 +195,7 @@ const TaskListScreen: React.FC<Props> = ({ navigation }) => {
         }
         ListEmptyComponent={renderEmptyComponent}
         stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
       />
 
       <FAB icon="mic" onPress={() => setShowVoiceModal(true)} />
