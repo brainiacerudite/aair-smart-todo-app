@@ -29,7 +29,9 @@ export const DeepgramService: AIProvider = {
         }
     },
 
-    // I used a logic-based splitter here since deepgram cannot do that.
+    /**
+     * I used a logic-based splitter here since deepgram cannot do that.
+     */
     parseTasks: async (text: string): Promise<string[]> => {
         try {
             if (!text) return [];
