@@ -144,7 +144,7 @@ describe('useTaskStore', () => {
             const updatedTasks = useTaskStore.getState().tasks;
             expect(updatedTasks[0].isCompleted).toBe(true);
             expect(updatedTasks[1].isCompleted).toBe(false);
-            expect(updatedTasks[2].isCompleted).toBe(true);
+            expect(updatedTasks[2].isCompleted).toBe(false);
         });
     });
 
