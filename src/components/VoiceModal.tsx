@@ -36,7 +36,6 @@ const VoiceModal: React.FC<Props> = ({ visible, onClose }) => {
 
   const {
     isRecording,
-    recordingUri,
     startRecording,
     stopRecording,
     error: recordingError,
@@ -76,11 +75,11 @@ const VoiceModal: React.FC<Props> = ({ visible, onClose }) => {
 
   const handleRecordPress = useCallback(async () => {
     if (isRecording) {
-      await stopRecording();
+      const uri = await stopRecording();
 
       // process audio
       try {
-        await processAudioToTasks(recordingUri);
+        await processAudioToTasks(uri);
         setShowSplitModal(true);
       } catch (error) {
         Alert.alert(
@@ -91,13 +90,7 @@ const VoiceModal: React.FC<Props> = ({ visible, onClose }) => {
     } else {
       await startRecording();
     }
-  }, [
-    isRecording,
-    recordingUri,
-    processAudioToTasks,
-    startRecording,
-    stopRecording,
-  ]);
+  }, [isRecording, processAudioToTasks, startRecording, stopRecording]);
 
   const handleSaveOriginal = useCallback(async () => {
     if (!originalText) return;

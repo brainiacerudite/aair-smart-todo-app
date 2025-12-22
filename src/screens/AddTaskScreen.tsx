@@ -46,18 +46,17 @@ const AddTaskScreen: React.FC<Props> = ({ navigation, route }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [isRecordingTitle, setIsRecordingTitle] = useState(false);
 
-  const { isRecording, recordingUri, startRecording, stopRecording } =
-    useVoiceRecorder();
+  const { isRecording, startRecording, stopRecording } = useVoiceRecorder();
 
   const { isProcessing, processAudioToText } = useTaskProcessor();
 
   const handleVoiceTitleInput = useCallback(async () => {
     if (isRecording) {
       setIsRecordingTitle(false);
-      await stopRecording();
+      const uri = await stopRecording();
 
       try {
-        const transcribedText = await processAudioToText(recordingUri);
+        const transcribedText = await processAudioToText(uri);
         setTitle(transcribedText);
       } catch (error) {
         Alert.alert(
@@ -71,13 +70,7 @@ const AddTaskScreen: React.FC<Props> = ({ navigation, route }) => {
       setIsRecordingTitle(true);
       await startRecording();
     }
-  }, [
-    isRecording,
-    recordingUri,
-    startRecording,
-    stopRecording,
-    processAudioToText,
-  ]);
+  }, [isRecording, startRecording, stopRecording, processAudioToText]);
 
   const handleSave = useCallback(() => {
     if (!title.trim()) {

@@ -10,10 +10,9 @@ import {
 export interface UseVoiceRecorderReturn {
     isRecording: boolean;
     duration: number;
-    recordingUri: string | null;
     error: string | null;
     startRecording: () => Promise<void>;
-    stopRecording: () => Promise<void>;
+    stopRecording: () => Promise<string | null>;
     togglePause: () => Promise<void>;
     clearError: () => void;
 }
@@ -22,7 +21,6 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
     const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
     const recorderState = useAudioRecorderState(audioRecorder);
 
-    const [recordingUri, setRecordingUri] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const startRecording = useCallback(async () => {
@@ -56,12 +54,15 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
         try {
             await audioRecorder.stop();
 
-            if (audioRecorder.uri) {
-                setRecordingUri(audioRecorder.uri);
+            const uri = audioRecorder.uri;
+            if (uri) {
+                return uri;
             }
+            return null;
         } catch (err) {
             setError('Failed to stop recording');
             console.log(err);
+            return null;
         }
     }, [audioRecorder]);
 
@@ -84,7 +85,6 @@ export const useVoiceRecorder = (): UseVoiceRecorderReturn => {
     return {
         isRecording: recorderState.isRecording,
         duration: recorderState.durationMillis,
-        recordingUri,
         error,
         startRecording,
         stopRecording,
