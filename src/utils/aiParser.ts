@@ -24,5 +24,5 @@ export const parseTasksFromText = (taskStrings: string[]): ParsedTask[] => {
 }
 
 export const validateParsedTasks = (tasks: ParsedTask[]): boolean => {
-    return tasks.length > 0 && tasks.every((task) => task.title.length > 0)
+    return tasks.length > 0 && tasks.every((task) => task.title.trim().length > 0)
 }
