@@ -5,7 +5,7 @@ import { DeepgramService } from './deepgramService';
 
 type AIChoice = 'OPENAI' | 'GEMINI' | 'DEEPGRAM';
 
-const AI_STRATEGY = 'DEEPGRAM' as AIChoice
+const AI_STRATEGY = 'OPENAI' as AIChoice
 
 const getClient = (): AIProvider => {
     switch (AI_STRATEGY) {
