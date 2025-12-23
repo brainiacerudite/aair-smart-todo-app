@@ -1,22 +1,24 @@
 import { OpenAIService } from './openAIService';
 import { GeminiService } from './geminiService';
-import { AIProvider } from '@/src/types';
 import { DeepgramService } from './deepgramService';
-
-type AIChoice = 'OPENAI' | 'GEMINI' | 'DEEPGRAM';
-
-const AI_STRATEGY = 'OPENAI' as AIChoice
+import { AIProvider } from '@/src/types';
 
 const getClient = (): AIProvider => {
-    switch (AI_STRATEGY) {
-        case 'DEEPGRAM':
-            return DeepgramService
-        case 'GEMINI':
-            return GeminiService
-        case 'OPENAI':
-        default:
-            return OpenAIService
+    if (process.env.EXPO_PUBLIC_OPENAI_API_KEY) {
+        return OpenAIService;
     }
+
+    if (process.env.EXPO_PUBLIC_GEMINI_API_KEY) {
+        return GeminiService;
+    }
+
+    if (process.env.EXPO_PUBLIC_DEEPGRAM_API_KEY) {
+        return DeepgramService;
+    }
+
+    // fallback to OpenAI
+    console.warn('No AI API Key found in .env! Defaulting to OpenAI (requests will fail).');
+    return OpenAIService;
 };
 
-export const AIService = getClient()
+export const AIService = getClient();

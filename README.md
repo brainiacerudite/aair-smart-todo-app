@@ -119,12 +119,17 @@ src/
    cp .env.example .env
    ```
 
-   Open `.env` and add your API keys:
+   Open `.env` and add _ONE_ of the following API keys
 
    ```env
-   EXPO_PUBLIC_OPENAI_API_KEY="sk-your-openai-key-here"
-   EXPO_PUBLIC_GEMINI_API_KEY="your-gemini-key-here"
-   EXPO_PUBLIC_DEEPGRAM_API_KEY="your-deepgram-key-here"
+   # option 1
+   EXPO_PUBLIC_OPENAI_API_KEY="sk-..."
+
+   # option 2
+   EXPO_PUBLIC_GEMINI_API_KEY="AIza..."
+
+   # option 3
+   EXPO_PUBLIC_DEEPGRAM_API_KEY="qwerty..."
    ```
 
    **Get API Keys:**
@@ -133,7 +138,7 @@ src/
    - Gemini: https://makersuite.google.com/app/apikey
    - Deepgram: https://console.deepgram.com/
 
-   **Note:** You only need ONE API key from any provider. The app will automatically use the first available provider. Then set the `AIChoice` in `src/services/ai/index.ts`
+   **Note:** You only need ONE API key from any provider. The app will automatically use the first available provider.
 
 4. **Start the development server**
 
