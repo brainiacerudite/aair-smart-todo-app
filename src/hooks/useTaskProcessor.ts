@@ -33,7 +33,7 @@ export const useTaskProcessor = () => {
             try {
                 taskStrings = await AIService.parseTasks(transcribedText);
             } catch (gptError) {
-                console.warn('GPT parsing failed, using fallback:', gptError);
+                console.log('GPT parsing failed, using fallback:', gptError);
                 taskStrings = [transcribedText];
             }
 

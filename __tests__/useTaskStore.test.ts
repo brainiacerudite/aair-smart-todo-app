@@ -10,7 +10,7 @@
  * - State persistence
  */
 
-import { act } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react-native';
 import { useTaskStore } from '../src/store/useTaskStore';
 import { SortOrder } from '../src/types';
 
