@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: spacing.md,
+    paddingBottom: spacing.sm,
     marginTop: spacing.md,
   },
   searchContainer: {
